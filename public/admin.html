@@ -50,6 +50,12 @@
     <div id="demo-banner" class="notice info" hidden>Mode démonstration : base de données non connectée, mot de passe « demo ». Les modifications restent dans ce navigateur.</div>
     <div id="msg"></div>
 
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" id="tab-btn-reports" role="tab" aria-selected="true">Signalements</button>
+      <button type="button" class="tab" id="tab-btn-settings" role="tab" aria-selected="false">Paramètres du site</button>
+    </div>
+
+    <div id="tab-reports">
     <div class="stats" style="margin-top:0; margin-bottom:24px">
       <div class="stat"><div class="n" id="a-new">0</div><div class="l">À valider</div></div>
       <div class="stat"><div class="n" id="a-pub">0</div><div class="l">Publiés</div></div>
@@ -72,10 +78,27 @@
     </div>
 
     <div class="admin-list" id="list"></div>
+    </div>
+
+    <div id="tab-settings" hidden>
+      <div class="card">
+        <h2>Paramètres du site</h2>
+        <p class="hint" style="margin-bottom:18px">Ces textes s'affichent sur la page d'accueil. Les changements sont visibles tout de suite après l'enregistrement. Un champ laissé vide reprend le texte d'origine.</p>
+        <form id="settings-form" novalidate>
+          <div id="settings-fields"></div>
+          <div class="row-actions">
+            <button type="submit" class="btn" id="set-save">Enregistrer</button>
+            <a class="btn secondary" href="/" target="_blank" rel="noopener">Voir le site</a>
+            <button type="button" class="btn danger" id="set-reset">Rétablir les textes d'origine</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </main>
 
 <script src="/config.js"></script>
+<script src="/settings.js"></script>
 <script src="/admin.js"></script>
 </body>
 </html>

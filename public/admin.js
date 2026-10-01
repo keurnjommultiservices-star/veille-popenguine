@@ -24,6 +24,11 @@
   }
 
   function demoApi(method, path, body) {
+    if (path === '/api/settings') {
+      if (method === 'GET') return Promise.resolve({ settings: window.Settings.demoRead() });
+      if (method === 'PUT') { window.Settings.demoWrite(body.settings || {}); return Promise.resolve({ settings: body.settings || {} }); }
+      if (method === 'DELETE') { window.Settings.demoReset(); return Promise.resolve({ ok: true }); }
+    }
     var data = window.Demo.load();
     if (method === 'GET') return Promise.resolve(data);
     if (method === 'PATCH') {
@@ -51,6 +56,89 @@
 
   function loadAll() {
     return api('GET', '/api/admin').then(function (r) { rows = r; render(); });
+  }
+
+  // ---------- Paramètres du site ----------
+  var FIELDS = [
+    { group: 'En-tête de l\'accueil', items: [
+      { k: 'heroTitle', label: 'Titre principal', area: false, max: 160 },
+      { k: 'heroText', label: 'Texte d\'introduction', area: true, max: 500 } ] },
+    { group: 'Section « Pourquoi cette plateforme ? »', items: [
+      { k: 'aboutTitle', label: 'Titre de la section', area: false, max: 100 },
+      { k: 'about1', label: 'Premier paragraphe', area: true, max: 800 },
+      { k: 'about2', label: 'Deuxième paragraphe', area: true, max: 800 } ] },
+    { group: 'Les trois étapes', steps: true },
+    { group: 'Association', items: [
+      { k: 'portedBy', label: 'Mention « Porté par »', area: false, max: 120 },
+      { k: 'portedByNote', label: 'Note sous la mention', area: true, max: 250 } ] },
+    { group: 'Localités', localities: true },
+    { group: 'Numéros d\'urgence', items: [
+      { k: 'emergency', label: 'Texte affiché en bas de page', area: true, max: 500 } ] },
+  ];
+
+  function field(id, label, value, area, max, hint) {
+    var ctl = area
+      ? '<textarea id="' + id + '" maxlength="' + max + '" rows="' + (max >= 700 ? 7 : 3) + '">' + esc(value) + '</textarea>'
+      : '<input id="' + id + '" maxlength="' + max + '" value="' + esc(value) + '">';
+    return '<div class="field"><label for="' + id + '">' + esc(label) + '</label>' + ctl + (hint ? '<span class="hint">' + esc(hint) + '</span>' : '') + '</div>';
+  }
+
+  function renderSettings(custom) {
+    var s = window.Settings.merge(custom);
+    $('settings-fields').innerHTML = FIELDS.map(function (g) {
+      var inner = '';
+      if (g.steps) {
+        inner = s.steps.map(function (st, i) {
+          return '<div class="set-step">' + field('set-st' + i + 't', 'Étape ' + (i + 1) + ' : titre', st.title, false, 60) +
+            field('set-st' + i + 'x', 'Étape ' + (i + 1) + ' : texte', st.text, true, 300) + '</div>';
+        }).join('');
+      } else if (g.localities) {
+        inner = '<div class="field"><label for="set-loc">Liste des localités</label><textarea id="set-loc" rows="8">' + esc(s.localities.join('\n')) +
+          '</textarea><span class="hint">Une localité par ligne. Elle apparaît dans le formulaire de signalement et dans les filtres.</span></div>';
+      } else {
+        inner = g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max); }).join('');
+      }
+      return '<fieldset class="set-group"><legend>' + esc(g.group) + '</legend>' + inner + '</fieldset>';
+    }).join('');
+  }
+
+  function collectSettings() {
+    var out = { steps: [], localities: [] };
+    FIELDS.forEach(function (g) {
+      if (g.items) g.items.forEach(function (it) { out[it.k] = $('set-' + it.k).value; });
+    });
+    for (var i = 0; i < 3; i++) out.steps.push({ title: $('set-st' + i + 't').value, text: $('set-st' + i + 'x').value });
+    out.localities = $('set-loc').value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+    return out;
+  }
+
+  function loadSettings() {
+    return api('GET', '/api/settings').then(function (r) { renderSettings(r.settings || {}); })
+      .catch(function () { renderSettings({}); });
+  }
+
+  function saveSettings(e) {
+    e.preventDefault();
+    var btn = $('set-save'); btn.disabled = true;
+    api('PUT', '/api/settings', { settings: collectSettings() })
+      .then(function (r) { renderSettings(r.settings || {}); msg('ok', 'Paramètres enregistrés. Le site public est à jour.'); })
+      .catch(function (err) { if (err.status === 401) return logout(); msg('err', err.message || 'Erreur'); })
+      .then(function () { btn.disabled = false; });
+  }
+
+  function resetSettings() {
+    if (!confirm('Rétablir tous les textes d\'origine ? Vos modifications seront perdues.')) return;
+    api('DELETE', '/api/settings')
+      .then(function () { renderSettings({}); msg('ok', 'Textes d\'origine rétablis.'); })
+      .catch(function (err) { if (err.status === 401) return logout(); msg('err', err.message || 'Erreur'); });
+  }
+
+  function switchTab(name) {
+    var isSet = name === 'settings';
+    $('tab-reports').hidden = isSet; $('tab-settings').hidden = !isSet;
+    $('tab-btn-reports').classList.toggle('active', !isSet); $('tab-btn-settings').classList.toggle('active', isSet);
+    $('tab-btn-reports').setAttribute('aria-selected', String(!isSet)); $('tab-btn-settings').setAttribute('aria-selected', String(isSet));
+    if (isSet) loadSettings();
   }
 
   function login(e) {
@@ -170,6 +258,7 @@
     if (e && e.preventDefault) e.preventDefault();
     try { sessionStorage.removeItem('veille_admin'); sessionStorage.removeItem('veille_admin_email'); } catch (x) {}
     pwd = ''; email = ''; demo = false; rows = [];
+    switchTab('reports');
     $('panel').hidden = true; $('logout').hidden = true; $('login').hidden = false; $('pwd').value = '';
   }
 
@@ -182,6 +271,10 @@
     $('list').addEventListener('click', onClick);
     $('logout').addEventListener('click', logout);
     $('export').addEventListener('click', exportCsv);
+    $('tab-btn-reports').addEventListener('click', function () { switchTab('reports'); });
+    $('tab-btn-settings').addEventListener('click', function () { switchTab('settings'); });
+    $('settings-form').addEventListener('submit', saveSettings);
+    $('set-reset').addEventListener('click', resetSettings);
 
     var saved = '';
     try { saved = sessionStorage.getItem('veille_admin') || ''; email = sessionStorage.getItem('veille_admin_email') || ''; } catch (x) {}

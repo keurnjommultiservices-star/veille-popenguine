@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Veille citoyenne de Popenguine</title>
+<script>document.documentElement.className+=" s-pending";setTimeout(function(){document.documentElement.classList.remove("s-pending")},2500);</script>
+<noscript><style>.s-pending [data-s]{opacity:1!important}</style></noscript>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Signalez alertes, remarques et suggestions sur la santé, la sécurité, l'éducation, l'eau, l'environnement et les routes à Popenguine et environs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +29,8 @@
 <div class="hero">
   <div class="hero-slides" aria-hidden="true"><div class="slide s1"></div><div class="slide s2"></div></div>
   <div class="wrap">
-    <h1>Faire remonter les difficultés de notre commune, pour mieux agir ensemble</h1>
-    <p>Un espace ouvert à tous les habitants de Popenguine et des localités voisines pour signaler un problème, donner un avis ou proposer une amélioration : santé, sécurité, éducation, eau, environnement et routes.</p>
+    <h1 data-s="heroTitle">Faire remonter les difficultés de notre commune, pour mieux agir ensemble</h1>
+    <p data-s="heroText">Un espace ouvert à tous les habitants de Popenguine et des localités voisines pour signaler un problème, donner un avis ou proposer une amélioration : santé, sécurité, éducation, eau, environnement et routes.</p>
     <div class="actions">
       <a class="btn" href="#signaler">Faire un signalement</a>
       <a class="btn secondary" href="#suivi">Voir les signalements publiés</a>
@@ -48,20 +50,20 @@
 <section id="presentation">
   <div class="wrap">
     <div class="section-title">
-      <h2>Pourquoi cette plateforme ?</h2>
+      <h2 data-s="aboutTitle">Pourquoi cette plateforme ?</h2>
     </div>
     <div class="about">
-      <p>À Popenguine et dans les localités voisines, les difficultés du quotidien sont nombreuses : un poste de santé en manque de médicaments, une rue sans éclairage, une salle de classe en mauvais état, un point d'eau en panne, une route impraticable. Trop souvent, elles restent connues de quelques-uns et n'arrivent pas jusqu'à ceux qui peuvent agir.</p>
-      <p>L'association And Bu Yagg Popenguine (ABYP) porte cette plateforme pour que chaque habitant puisse faire entendre sa voix, simplement et gratuitement. Ensemble, nous rassemblons les besoins du territoire, nous les rendons visibles et nous en suivons le traitement avec la commune et les partenaires concernés. Cette plateforme ne remplace pas les services officiels : elle aide à les alerter au bon moment.</p>
+      <p data-s="about1">À Popenguine et dans les localités voisines, les difficultés du quotidien sont nombreuses : un poste de santé en manque de médicaments, une rue sans éclairage, une salle de classe en mauvais état, un point d'eau en panne, une route impraticable. Trop souvent, elles restent connues de quelques-uns et n'arrivent pas jusqu'à ceux qui peuvent agir.</p>
+      <p data-s="about2">L'association And Bu Yagg Popenguine (ABYP) porte cette plateforme pour que chaque habitant puisse faire entendre sa voix, simplement et gratuitement. Ensemble, nous rassemblons les besoins du territoire, nous les rendons visibles et nous en suivons le traitement avec la commune et les partenaires concernés. Cette plateforme ne remplace pas les services officiels : elle aide à les alerter au bon moment.</p>
     </div>
     <div class="steps">
-      <div class="step"><span class="num">1</span><h3>Vous signalez</h3><p>Décrivez la situation en quelques lignes, choisissez le domaine et la localité, ajoutez des photos pour une alerte.</p></div>
-      <div class="step"><span class="num">2</span><h3>L'équipe d'ABYP vérifie</h3><p>Chaque message est relu avant d'être publié. Les propos injurieux ou les accusations contre des personnes ne sont pas publiés.</p></div>
-      <div class="step"><span class="num">3</span><h3>Le suivi est public</h3><p>Le signalement apparaît dans le suivi public avec son état : nouveau, en cours de traitement ou résolu.</p></div>
+      <div class="step"><span class="num">1</span><h3 data-s="steps.0.title">Vous signalez</h3><p data-s="steps.0.text">Décrivez la situation en quelques lignes, choisissez le domaine et la localité, ajoutez des photos pour une alerte.</p></div>
+      <div class="step"><span class="num">2</span><h3 data-s="steps.1.title">L'équipe d'ABYP vérifie</h3><p data-s="steps.1.text">Chaque message est relu avant d'être publié. Les propos injurieux ou les accusations contre des personnes ne sont pas publiés.</p></div>
+      <div class="step"><span class="num">3</span><h3 data-s="steps.2.title">Le suivi est public</h3><p data-s="steps.2.text">Le signalement apparaît dans le suivi public avec son état : nouveau, en cours de traitement ou résolu.</p></div>
     </div>
     <div class="portedby">
       <img src="/logo-abyp.jpg" alt="Logo And Bu Yagg Popenguine (ABYP)" width="62" height="80">
-      <p><strong>Porté par And Bu Yagg Popenguine (ABYP)</strong><br>Vos coordonnées, si vous en laissez, ne sont jamais publiées et servent uniquement à vous répondre.</p>
+      <p><strong data-s="portedBy">Porté par And Bu Yagg Popenguine (ABYP)</strong><br><span data-s="portedByNote">Vos coordonnées, si vous en laissez, ne sont jamais publiées et servent uniquement à vous répondre.</span></p>
     </div>
   </div>
 </section>
@@ -172,7 +174,7 @@
   <div class="wrap">
     <div class="emergency">
       <h3>En cas d'urgence immédiate</h3>
-      <p>Cette plateforme n'est pas un service d'urgence et n'est pas consultée en temps réel. En cas de danger, appelez directement : SAMU 1515, Sapeurs-pompiers 18, Police 17, Gendarmerie 800 00 20 20.</p>
+      <p data-s="emergency">Cette plateforme n'est pas un service d'urgence et n'est pas consultée en temps réel. En cas de danger, appelez directement : SAMU 1515, Sapeurs-pompiers 18, Police 17, Gendarmerie 800 00 20 20.</p>
     </div>
   </div>
 </section>
@@ -185,6 +187,7 @@
 </footer>
 
 <script src="/config.js"></script>
+<script src="/settings.js"></script>
 <script src="/icons.js"></script>
 <script src="/app.js"></script>
 </body>

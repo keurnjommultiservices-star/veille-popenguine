@@ -219,5 +219,10 @@
       .then(reset);
   }
 
-  init();
+  window.Settings.load().then(function (st) {
+    V.localites = st.localities;
+    window.Settings.apply(st);
+    document.documentElement.classList.remove('s-pending');
+    init();
+  });
 })();

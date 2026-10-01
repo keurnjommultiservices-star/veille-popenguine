@@ -33,3 +33,11 @@ on conflict (id) do nothing;
 -- Sécurité : aucune politique = aucun accès direct depuis le navigateur.
 -- Seules les fonctions Vercel (clé service_role) lisent et écrivent.
 alter table public.reports enable row level security;
+
+-- Paramètres du site (textes de l'accueil, localités, urgences), modifiables depuis l'administration
+create table if not exists public.site_settings (
+  id         text primary key,
+  data       jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+alter table public.site_settings enable row level security;

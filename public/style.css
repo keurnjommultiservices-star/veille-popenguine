@@ -241,3 +241,20 @@ tbody tr:nth-child(even) { background: #fafafa; }
 .hero h1, .hero p, .admin-band h1, .admin-band p { text-shadow: 0 1px 10px rgba(20,40,110,.85), 0 0 2px rgba(20,40,110,.7); }
 .admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.9) 0%, rgba(30,58,138,.72) 50%, rgba(30,58,138,0) 80%); }
 @media (max-width: 800px) { .admin-band::before { background: rgba(30,58,138,.5); } }
+
+/* Paramètres du site : chargement sans clignotement */
+[data-s] { transition: opacity .25s; }
+.s-pending [data-s] { opacity: 0; }
+
+/* Administration : onglets et formulaire des paramètres */
+.tabs { display: flex; gap: 6px; margin-bottom: 22px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.tab { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 16px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; margin-bottom: -1px; }
+.tab:hover { color: var(--accent); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.set-group { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px 6px; margin: 0 0 20px; }
+.set-group legend { font-weight: 700; padding: 0 8px; font-size: 1.05rem; }
+.set-group .field { margin-bottom: 14px; }
+.set-group textarea { min-height: 90px; }
+.set-step { border-top: 1px dashed var(--border); padding-top: 12px; margin-top: 4px; }
+.set-step:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+.row-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
