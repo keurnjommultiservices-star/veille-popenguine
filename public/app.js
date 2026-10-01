@@ -70,6 +70,10 @@
   }
 
   function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ico]'), function (el) {
+      var parts = el.getAttribute('data-ico').split(':');
+      el.outerHTML = window.icon(parts[0], parts[1]);
+    });
     fillSelect($('domain'), V.domaines);
     var loc = $('locality');
     loc.innerHTML = '<option value="">Choisir une localité</option>' +
@@ -82,7 +86,7 @@
       V.localites.map(function (l) { return '<option>' + esc(l) + '</option>'; }).join('');
 
     $('domains').innerHTML = Object.keys(V.domaines).map(function (k) {
-      return '<div class="domain" data-d="' + k + '"><h3>' + esc(V.domaines[k]) + '</h3><p>' + esc(DOMAIN_HELP[k]) +
+      return '<div class="domain" data-d="' + k + '">' + window.icon(k, 'teal') + '<h3>' + esc(V.domaines[k]) + '</h3><p>' + esc(DOMAIN_HELP[k]) +
         '</p><span class="c" data-count="' + k + '"></span></div>';
     }).join('');
 

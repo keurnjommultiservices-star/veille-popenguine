@@ -63,6 +63,10 @@ Optionnel : `SITE_URL` (ex. `https://veille-popenguine.vercel.app`) pour fixer l
 
 Le site est volontairement masqué de Google (`noindex` dans `index.html`, `X-Robots-Tag` dans `vercel.json`, `public/robots.txt`). Pour le rendre public : retirer ces trois éléments et redéployer.
 
+## Fond tramé du Cap de Naze
+
+Fournir une photo du Cap de Naze (JPG), puis : `python3 outils/trame.py photo.jpg public/cap-de-naze-trame.png`. L'outil produit une image en points, à placer en fond de l'en-tête de la page d'accueil. Utiliser une photo dont vous avez les droits (la vôtre, ou celle d'un ami ou de l'association).
+
 ## Personnalisation
 
 `public/config.js` : liste des localités, libellés des domaines, types et états.

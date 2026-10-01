@@ -6,6 +6,9 @@
 <title>Veille citoyenne de Popenguine</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Signalez alertes, remarques et suggestions sur la santé, la sécurité, l'éducation, l'eau, l'environnement et les routes à Popenguine et environs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -34,10 +37,10 @@
 
 <div class="wrap">
   <div class="stats" id="stats" aria-live="polite">
-    <div class="stat"><div class="n" id="s-total">0</div><div class="l">Signalements publiés</div></div>
-    <div class="stat"><div class="n" id="s-open">0</div><div class="l">En attente de traitement</div></div>
-    <div class="stat"><div class="n" id="s-progress">0</div><div class="l">En cours de traitement</div></div>
-    <div class="stat"><div class="n" id="s-done">0</div><div class="l">Résolus</div></div>
+    <div class="stat has-icon"><span data-ico="publies:blue"></span><div><div class="n" id="s-total">0</div><div class="l">Signalements publiés</div></div></div>
+    <div class="stat has-icon"><span data-ico="attente:amber"></span><div><div class="n" id="s-open">0</div><div class="l">En attente de traitement</div></div></div>
+    <div class="stat has-icon"><span data-ico="encours:teal"></span><div><div class="n" id="s-progress">0</div><div class="l">En cours de traitement</div></div></div>
+    <div class="stat has-icon"><span data-ico="resolus:green"></span><div><div class="n" id="s-done">0</div><div class="l">Résolus</div></div></div>
   </div>
 </div>
 
@@ -181,6 +184,7 @@
 </footer>
 
 <script src="/config.js"></script>
+<script src="/icons.js"></script>
 <script src="/app.js"></script>
 </body>
 </html>
