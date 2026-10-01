@@ -43,13 +43,23 @@ function readBody(req) {
   return {};
 }
 
+function safeEqual(a, b) {
+  const x = crypto.createHash('sha256').update(String(a)).digest();
+  const y = crypto.createHash('sha256').update(String(b)).digest();
+  return crypto.timingSafeEqual(x, y);
+}
+
+// Mot de passe obligatoire. Si ADMIN_EMAIL est défini, l'e-mail doit aussi correspondre.
 function isAdmin(req) {
-  const expected = process.env.ADMIN_PASSWORD || '';
-  const given = String(req.headers['x-admin-password'] || '');
-  if (!expected || !given) return false;
-  const a = crypto.createHash('sha256').update(given).digest();
-  const b = crypto.createHash('sha256').update(expected).digest();
-  return crypto.timingSafeEqual(a, b);
+  const expectedPwd = process.env.ADMIN_PASSWORD || '';
+  const givenPwd = String(req.headers['x-admin-password'] || '');
+  const pwdOk = Boolean(expectedPwd && givenPwd) && safeEqual(givenPwd, expectedPwd);
+
+  const expectedEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+  const givenEmail = String(req.headers['x-admin-email'] || '').trim().toLowerCase();
+  const emailOk = !expectedEmail || (Boolean(givenEmail) && safeEqual(givenEmail, expectedEmail));
+
+  return pwdOk && emailOk;
 }
 
 function clean(value, max) {

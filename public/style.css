@@ -214,11 +214,11 @@ tbody tr:nth-child(even) { background: #fafafa; }
 .hero, .admin-band { position: relative; overflow: hidden; isolation: isolate; }
 .hero-slides { position: absolute; inset: 0; z-index: -2; }
 .hero-slides .slide { position: absolute; inset: 0; background-repeat: no-repeat; opacity: 0; animation: heroFade 16s infinite; }
-.hero-slides .s1 { background-image: url(/trame-cap-1.png); background-size: auto 100%; background-position: right 6% center; animation-delay: -1s; }
+.hero-slides .s1 { background-image: url(/trame-cap-1.png); background-size: auto 125%; background-position: right 7% center; animation-delay: -1s; }
 .hero-slides .s2 { background-image: url(/trame-cap-2.png); background-size: cover; background-position: right center; animation-delay: 7s; }
 .hero::before, .admin-band::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(90deg, rgba(30,58,138,.95) 0%, rgba(30,58,138,.82) 48%, rgba(30,58,138,0) 74%);
+  background: linear-gradient(90deg, rgba(30,58,138,.9) 0%, rgba(30,58,138,.72) 50%, rgba(30,58,138,0) 80%);
 }
 @keyframes heroFade { 0% { opacity: 0; } 6% { opacity: 1; } 50% { opacity: 1; } 56% { opacity: 0; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
@@ -226,7 +226,7 @@ tbody tr:nth-child(even) { background: #fafafa; }
   .hero-slides .s1 { opacity: 1; }
 }
 @media (max-width: 800px) {
-  .hero::before, .admin-band::before { background: rgba(30,58,138,.66); }
+  .hero::before, .admin-band::before { background: rgba(30,58,138,.5); }
 }
 
 /* Administration : bandeau */
@@ -236,7 +236,8 @@ tbody tr:nth-child(even) { background: #fafafa; }
 .login { margin: -28px auto 60px; position: relative; z-index: 2; }
 #panel { margin-top: 0; }
 
-/* Administration : cadrage des photos dans le bandeau */
-.admin-band .s1 { background-size: 40% auto; background-position: right 4% top 40%; }
-.admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.95) 0%, rgba(30,58,138,.8) 42%, rgba(30,58,138,0) 70%); }
-@media (max-width: 800px) { .admin-band::before { background: rgba(30,58,138,.66); } }
+
+/* Lisibilité du texte sur le fond tramé */
+.hero h1, .hero p, .admin-band h1, .admin-band p { text-shadow: 0 1px 10px rgba(20,40,110,.85), 0 0 2px rgba(20,40,110,.7); }
+.admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.9) 0%, rgba(30,58,138,.72) 50%, rgba(30,58,138,0) 80%); }
+@media (max-width: 800px) { .admin-band::before { background: rgba(30,58,138,.5); } }

@@ -9,7 +9,8 @@ module.exports = async function handler(req, res) {
     return res.status(503).json({ error: 'Configuration serveur incomplète (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_PASSWORD)' });
   }
   if (!isAdmin(req)) {
-    return res.status(401).json({ error: 'Mot de passe incorrect' });
+    await new Promise((r) => setTimeout(r, 500)); // ralentit les essais répétés
+    return res.status(401).json({ error: 'E-mail ou mot de passe incorrect' });
   }
 
   try {

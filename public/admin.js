@@ -1,6 +1,7 @@
 (function () {
   var V = window.VEILLE, esc = window.esc;
   var pwd = '';
+  var email = '';
   var demo = false;
   var rows = [];
 
@@ -10,7 +11,7 @@
     if (demo) return demoApi(method, path, body);
     return fetch(path, {
       method: method,
-      headers: { 'Content-Type': 'application/json', 'x-admin-password': pwd },
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': pwd, 'x-admin-email': email },
       body: body ? JSON.stringify(body) : undefined,
       cache: 'no-store',
     }).then(function (r) {
@@ -54,17 +55,18 @@
   function login(e) {
     e.preventDefault();
     pwd = $('pwd').value;
-    fetch('/api/admin', { headers: { 'x-admin-password': pwd }, cache: 'no-store' })
+    email = $('email').value.trim();
+    fetch('/api/admin', { headers: { 'x-admin-password': pwd, 'x-admin-email': email }, cache: 'no-store' })
       .then(function (r) {
         if (r.status === 503) {
           // Base non configurée : mode démonstration
-          if (pwd !== 'demo') { $('login-msg').innerHTML = '<div class="notice err">Mode démonstration : utilisez le mot de passe « demo ».</div>'; return; }
+          if (pwd !== 'demo') { $('login-msg').innerHTML = '<div class="notice err">Mode démonstration : saisissez n\'importe quel e-mail et le mot de passe « demo ».</div>'; return; }
           demo = true; showPanel(); return loadAll();
         }
-        if (r.status === 401) { $('login-msg').innerHTML = '<div class="notice err">Mot de passe incorrect.</div>'; return; }
+        if (r.status === 401) { $('login-msg').innerHTML = '<div class="notice err">E-mail ou mot de passe incorrect.</div>'; return; }
         if (!r.ok) { $('login-msg').innerHTML = '<div class="notice err">Erreur serveur.</div>'; return; }
         return r.json().then(function (j) {
-          try { sessionStorage.setItem('veille_admin', pwd); } catch (x) {}
+          try { sessionStorage.setItem('veille_admin', pwd); sessionStorage.setItem('veille_admin_email', email); } catch (x) {}
           rows = j; showPanel(); render();
         });
       })
@@ -165,8 +167,8 @@
 
   function logout(e) {
     if (e && e.preventDefault) e.preventDefault();
-    try { sessionStorage.removeItem('veille_admin'); } catch (x) {}
-    pwd = ''; demo = false; rows = [];
+    try { sessionStorage.removeItem('veille_admin'); sessionStorage.removeItem('veille_admin_email'); } catch (x) {}
+    pwd = ''; email = ''; demo = false; rows = [];
     $('panel').hidden = true; $('logout').hidden = true; $('login').hidden = false; $('pwd').value = '';
   }
 
@@ -181,10 +183,10 @@
     $('export').addEventListener('click', exportCsv);
 
     var saved = '';
-    try { saved = sessionStorage.getItem('veille_admin') || ''; } catch (x) {}
+    try { saved = sessionStorage.getItem('veille_admin') || ''; email = sessionStorage.getItem('veille_admin_email') || ''; } catch (x) {}
     if (saved) {
       pwd = saved;
-      fetch('/api/admin', { headers: { 'x-admin-password': pwd }, cache: 'no-store' })
+      fetch('/api/admin', { headers: { 'x-admin-password': pwd, 'x-admin-email': email }, cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw 0; return r.json(); })
         .then(function (j) { rows = j; showPanel(); render(); })
         .catch(function () { pwd = ''; });

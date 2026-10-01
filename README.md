@@ -24,9 +24,12 @@ Pour tester en local : `npx vercel dev` (ou ouvrir `public/index.html`, l'API se
    - `SUPABASE_URL` : l'URL du projet Supabase
    - `SUPABASE_SERVICE_ROLE_KEY` : la clé service_role
    - `ADMIN_PASSWORD` : un mot de passe long et unique
+   - `ADMIN_EMAIL` : l'adresse e-mail de l'administrateur (connexion à `/admin` par e-mail + mot de passe)
 5. Redéployer. Le site passe automatiquement du mode démonstration au mode réel.
 
 Administration : `https://votre-site.vercel.app/admin`
+
+Mot de passe oublié ou à changer : le modifier dans Vercel (*Settings > Environment Variables*, variable `ADMIN_PASSWORD`), puis redéployer. Il n'y a pas de réinitialisation par e-mail. Les notifications de nouveaux signalements vont à l'adresse de `NOTIFY_EMAIL_TO` (voir plus bas), qui peut être la même que `ADMIN_EMAIL`.
 
 ## Photos
 
@@ -78,5 +81,5 @@ Options utiles : `--miroir` (retourner l'image), `--fondu 0.2` (adoucir les bord
 ## Limites connues (à prévoir pour la suite)
 
 - Pas de limitation de débit avancée : seul un champ piège anti-robots est en place. Si le site subit du spam, ajouter un captcha (Cloudflare Turnstile) ou un rate limit.
-- Un seul mot de passe administrateur partagé.
+- Un seul compte administrateur (e-mail + mot de passe).
 - Pas de photos jointes ni de notifications (SMS/WhatsApp/e-mail) : extensions possibles.
