@@ -209,3 +209,34 @@ tbody tr:nth-child(even) { background: #fafafa; }
   .stat .n { font-size: 2.2rem; }
   h1 { font-size: 1.8rem; }
 }
+
+/* Fond tramé en défilement (photos de Cap Naze) */
+.hero, .admin-band { position: relative; overflow: hidden; isolation: isolate; }
+.hero-slides { position: absolute; inset: 0; z-index: -2; }
+.hero-slides .slide { position: absolute; inset: 0; background-repeat: no-repeat; opacity: 0; animation: heroFade 16s infinite; }
+.hero-slides .s1 { background-image: url(/trame-cap-1.png); background-size: auto 100%; background-position: right 6% center; animation-delay: -1s; }
+.hero-slides .s2 { background-image: url(/trame-cap-2.png); background-size: cover; background-position: right center; animation-delay: 7s; }
+.hero::before, .admin-band::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(30,58,138,.95) 0%, rgba(30,58,138,.82) 48%, rgba(30,58,138,0) 74%);
+}
+@keyframes heroFade { 0% { opacity: 0; } 6% { opacity: 1; } 50% { opacity: 1; } 56% { opacity: 0; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-slides .slide { animation: none; }
+  .hero-slides .s1 { opacity: 1; }
+}
+@media (max-width: 800px) {
+  .hero::before, .admin-band::before { background: rgba(30,58,138,.66); }
+}
+
+/* Administration : bandeau */
+.admin-band { background: var(--accent); color: #fff; padding: 34px 0 60px; }
+.admin-band h1 { color: #fff; font-size: 1.9rem; margin-bottom: 6px; }
+.admin-band p { color: #eef2ff; margin: 0; font-size: 1.1rem; max-width: 640px; }
+.login { margin: -28px auto 60px; position: relative; z-index: 2; }
+#panel { margin-top: 0; }
+
+/* Administration : cadrage des photos dans le bandeau */
+.admin-band .s1 { background-size: 40% auto; background-position: right 4% top 40%; }
+.admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.95) 0%, rgba(30,58,138,.8) 42%, rgba(30,58,138,0) 70%); }
+@media (max-width: 800px) { .admin-band::before { background: rgba(30,58,138,.66); } }

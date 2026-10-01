@@ -63,9 +63,13 @@ Optionnel : `SITE_URL` (ex. `https://veille-popenguine.vercel.app`) pour fixer l
 
 Le site est volontairement masqué de Google (`noindex` dans `index.html`, `X-Robots-Tag` dans `vercel.json`, `public/robots.txt`). Pour le rendre public : retirer ces trois éléments et redéployer.
 
-## Fond tramé du Cap de Naze
+## Fond tramé du Cap Naze (accueil et administration)
 
-Fournir une photo du Cap de Naze (JPG), puis : `python3 outils/trame.py photo.jpg public/cap-de-naze-trame.png`. L'outil produit une image en points, à placer en fond de l'en-tête de la page d'accueil. Utiliser une photo dont vous avez les droits (la vôtre, ou celle d'un ami ou de l'association).
+Deux photos défilent en fondu (16 secondes) derrière le titre de l'accueil et dans le bandeau de l'espace admin. Pour changer les photos : déposer les originaux dans `outils/sources/`, puis par exemple :
+
+`python3 outils/trame.py outils/sources/photo.jpg public/trame-cap-2.png --largeur 1800 --pas 9 --opacite 0.5 --gamma 1.6 --ratio 16:6`
+
+Options utiles : `--miroir` (retourner l'image), `--fondu 0.2` (adoucir les bords), `--pas` (taille de la trame). Les photos sont référencées dans `public/style.css` (`.hero-slides .s1` et `.s2`). Vérifier les droits d'utilisation des photos avant la mise en ligne publique.
 
 ## Personnalisation
 
