@@ -215,19 +215,26 @@ tbody tr:nth-child(even) { background: #fafafa; }
 .hero, .admin-band { position: relative; overflow: hidden; isolation: isolate; }
 .hero-slides { position: absolute; inset: 0; z-index: -2; }
 .hero-slides .slide { position: absolute; inset: 0; background-repeat: no-repeat; opacity: 0; animation: heroFade 16s infinite; }
-.hero-slides .s1 { background-image: url(/trame-cap-1.png); background-size: auto 125%; background-position: right 7% center; animation-delay: -1s; }
-.hero-slides .s2 { background-image: url(/trame-cap-2.png); background-size: cover; background-position: right center; animation-delay: 7s; }
+.hero-slides .s2 { background-image: url(/cap-naze-2.jpg); background-size: cover; background-position: 70% 60%; animation-delay: 7s; }
+/* Photo de la sculpture : cadre net à droite de l'accueil */
+.hero-slides .s1 { background-image: url(/cap-naze-1.jpg); background-size: cover; background-position: center 30%; animation-delay: -1s;
+  inset: 32px 7% 32px auto; width: min(300px, 26%); border-radius: 14px; border: 3px solid rgba(255,255,255,.92); box-shadow: 0 14px 40px rgba(10,20,60,.45); }
+/* Administration : une seule photo fixe, sans cadre */
+.admin-band .hero-slides .s1 { display: none; }
+.admin-band .hero-slides .s2 { animation: none; opacity: 1; }
 .hero::before, .admin-band::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(90deg, rgba(30,58,138,.9) 0%, rgba(30,58,138,.72) 50%, rgba(30,58,138,0) 80%);
+  background: linear-gradient(90deg, rgba(30,58,138,.96) 0%, rgba(30,58,138,.88) 38%, rgba(30,58,138,.45) 68%, rgba(30,58,138,.12) 100%);
 }
 @keyframes heroFade { 0% { opacity: 0; } 6% { opacity: 1; } 50% { opacity: 1; } 56% { opacity: 0; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .hero-slides .slide { animation: none; }
   .hero-slides .s1 { opacity: 1; }
 }
-@media (max-width: 800px) {
-  .hero::before, .admin-band::before { background: rgba(30,58,138,.5); }
+@media (max-width: 900px) {
+  .hero::before, .admin-band::before { background: rgba(30,58,138,.8); }
+  .hero-slides .s1 { display: none; }
+  .hero-slides .s2 { animation: none; opacity: 1; }
 }
 
 /* Administration : bandeau */
@@ -240,8 +247,8 @@ tbody tr:nth-child(even) { background: #fafafa; }
 
 /* Lisibilité du texte sur le fond tramé */
 .hero h1, .hero p, .admin-band h1, .admin-band p { text-shadow: 0 1px 10px rgba(20,40,110,.85), 0 0 2px rgba(20,40,110,.7); }
-.admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.9) 0%, rgba(30,58,138,.72) 50%, rgba(30,58,138,0) 80%); }
-@media (max-width: 800px) { .admin-band::before { background: rgba(30,58,138,.5); } }
+.admin-band::before { background: linear-gradient(90deg, rgba(30,58,138,.96) 0%, rgba(30,58,138,.85) 40%, rgba(30,58,138,.35) 100%); }
+@media (max-width: 900px) { .admin-band::before { background: rgba(30,58,138,.8); } }
 
 /* Paramètres du site : chargement sans clignotement */
 [data-s] { transition: opacity .25s; }

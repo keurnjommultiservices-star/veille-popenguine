@@ -76,13 +76,9 @@ Onglet **Paramètres du site** (dans `/admin`) : titre et introduction de l'accu
 
 Le site est volontairement masqué de Google (`noindex` dans `index.html`, `X-Robots-Tag` dans `vercel.json`, `public/robots.txt`). Pour le rendre public : retirer ces trois éléments et redéployer.
 
-## Fond tramé du Cap Naze (accueil et administration)
+## Photos de fond du Cap Naze (accueil et administration)
 
-Deux photos défilent en fondu (16 secondes) derrière le titre de l'accueil et dans le bandeau de l'espace admin. Pour changer les photos : déposer les originaux dans `outils/sources/`, puis par exemple :
-
-`python3 outils/trame.py outils/sources/photo.jpg public/trame-cap-2.png --largeur 1800 --pas 9 --opacite 0.5 --gamma 1.6 --ratio 16:6`
-
-Options utiles : `--miroir` (retourner l'image), `--fondu 0.2` (adoucir les bords), `--pas` (taille de la trame). Les photos sont référencées dans `public/style.css` (`.hero-slides .s1` et `.s2`). Vérifier les droits d'utilisation des photos avant la mise en ligne publique.
+L'accueil alterne en fondu (16 secondes) la photo de la sculpture (cadre à droite) et celle de la falaise (plein fond sous un voile bleu). L'administration affiche la falaise seule. Pour changer une photo : remplacer `public/cap-naze-1.jpg` ou `public/cap-naze-2.jpg` (même nom). Vérifier les droits d'utilisation des photos avant la mise en ligne publique. L'ancien outil de trame reste dans `outils/trame.py` si besoin.
 
 ## Personnalisation
 
