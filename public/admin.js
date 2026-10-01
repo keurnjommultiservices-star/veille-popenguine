@@ -1,4 +1,5 @@
 (function () {
+  function noApi(s) { return s === 503 || s === 404 || s === 405 || s === 501; } // pas d'API : mode démonstration
   var V = window.VEILLE, esc = window.esc;
   var pwd = '';
   var email = '';
@@ -58,7 +59,7 @@
     email = $('email').value.trim();
     fetch('/api/admin', { headers: { 'x-admin-password': pwd, 'x-admin-email': email }, cache: 'no-store' })
       .then(function (r) {
-        if (r.status === 503) {
+        if (noApi(r.status)) {
           // Base non configurée : mode démonstration
           if (pwd !== 'demo') { $('login-msg').innerHTML = '<div class="notice err">Mode démonstration : saisissez n\'importe quel e-mail et le mot de passe « demo ».</div>'; return; }
           demo = true; showPanel(); return loadAll();

@@ -1,4 +1,5 @@
 (function () {
+  function noApi(s) { return s === 503 || s === 404 || s === 405 || s === 501; } // pas d'API : mode démonstration
   var V = window.VEILLE, esc = window.esc;
   var demo = false;
   var reports = [];
@@ -109,7 +110,7 @@
   function load() {
     fetch('/api/reports', { cache: 'no-store' })
       .then(function (r) {
-        if (r.status === 503) { demo = true; return window.Demo.load().filter(function (x) { return x.published && x.status !== 'rejete'; }); }
+        if (noApi(r.status)) { demo = true; return window.Demo.load().filter(function (x) { return x.published && x.status !== 'rejete'; }); }
         if (!r.ok) throw new Error('Chargement impossible');
         return r.json();
       })
@@ -205,7 +206,7 @@
 
     fetch('/api/reports', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) {
-        if (r.status === 503) {
+        if (noApi(r.status)) {
           var rows = window.Demo.load();
           rows.unshift({ id: 'd' + Date.now(), created_at: new Date().toISOString(), kind: data.kind, domain: data.domain, locality: data.locality, title: data.title, description: data.description, urgency: data.urgency, contact: data.contact || null, photos: data.photos, status: 'nouveau', published: false, admin_note: null });
           window.Demo.save(rows);

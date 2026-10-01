@@ -9,11 +9,17 @@ Plateforme publique où les habitants de Popenguine et environs signalent alerte
 - `api/admin.js` : modération (mot de passe requis)
 - `supabase/schema.sql` : table et sécurité de la base
 
-## Tester tout de suite (mode démonstration)
+## Tester en local (sans Vercel ni base de données)
 
-Sans base configurée, le site fonctionne avec des données de démonstration stockées dans le navigateur. Mot de passe admin en démo : `demo`.
+Depuis le dossier du projet, avec Node.js installé :
 
-Pour tester en local : `npx vercel dev` (ou ouvrir `public/index.html`, l'API sera simplement absente et la démo prendra le relais).
+`npx serve public`
+
+Ouvrir ensuite l'adresse affichée (en général `http://localhost:3000`). Le site fonctionne en mode démonstration : des exemples sont fournis et les messages restent dans le navigateur. Administration : `http://localhost:3000/admin`, avec n'importe quel e-mail et le mot de passe `demo`.
+
+Parcours à essayer : envoyer un signalement depuis l'accueil, le valider dans l'administration (bouton « Valider et publier »), puis le retrouver dans le suivi public. Pour repartir de zéro, effacer les données du site dans le navigateur.
+
+Ne pas ouvrir `index.html` en double-cliquant : les fichiers ont besoin d'un petit serveur.
 
 ## Mise en ligne sur Vercel
 
