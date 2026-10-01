@@ -1,0 +1,7 @@
+{
+  "name": "veille-popenguine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plateforme de veille citoyenne - Popenguine et environs",
+  "engines": { "node": ">=18" }
+}

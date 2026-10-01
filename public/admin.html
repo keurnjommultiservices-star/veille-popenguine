@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Administration - Veille citoyenne de Popenguine</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo-abyp.jpg" alt="Logo ABYP" width="36" height="46"><span>Veille citoyenne de Popenguine<small>Espace administration</small></span></a>
+    <nav class="nav"><a href="/">Voir le site public</a><a href="#" id="logout" hidden>Se déconnecter</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="login" class="login card">
+    <h2>Connexion</h2>
+    <div id="login-msg"></div>
+    <form id="login-form">
+      <div class="field">
+        <label for="pwd">Mot de passe administrateur</label>
+        <input type="password" id="pwd" autocomplete="current-password" required>
+      </div>
+      <p></p>
+      <button class="btn" type="submit">Se connecter</button>
+    </form>
+  </div>
+
+  <div id="panel" hidden style="padding:32px 0">
+    <div id="demo-banner" class="notice info" hidden>Mode démonstration : base de données non connectée, mot de passe « demo ». Les modifications restent dans ce navigateur.</div>
+    <div id="msg"></div>
+
+    <div class="stats" style="margin-top:0; margin-bottom:24px">
+      <div class="stat"><div class="n" id="a-new">0</div><div class="l">À valider</div></div>
+      <div class="stat"><div class="n" id="a-pub">0</div><div class="l">Publiés</div></div>
+      <div class="stat"><div class="n" id="a-prog">0</div><div class="l">En cours</div></div>
+      <div class="stat"><div class="n" id="a-urg">0</div><div class="l">Urgents non traités</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="filters-inline">
+        <select id="v-view" aria-label="Vue">
+          <option value="pending">À valider</option>
+          <option value="published">Publiés</option>
+          <option value="rejected">Rejetés</option>
+          <option value="all">Tous</option>
+        </select>
+        <select id="v-domain" aria-label="Domaine"><option value="">Tous les domaines</option></select>
+        <select id="v-kind" aria-label="Type"><option value="">Tous les types</option></select>
+      </div>
+      <button class="btn secondary small" id="export">Exporter en CSV</button>
+    </div>
+
+    <div class="admin-list" id="list"></div>
+  </div>
+</main>
+
+<script src="/config.js"></script>
+<script src="/admin.js"></script>
+</body>
+</html>

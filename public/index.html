@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veille citoyenne de Popenguine</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Signalez alertes, remarques et suggestions sur la santé, la sécurité, l'éducation, l'eau, l'environnement et les routes à Popenguine et environs.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo-abyp.jpg" alt="Logo And Bu Yagg Popenguine (ABYP)" width="40" height="52"><span>Veille citoyenne de Popenguine<small>Portée par l'association And Bu Yagg Popenguine (ABYP)</small></span></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#signaler">Signaler</a>
+      <a href="#suivi">Suivi public</a>
+      <a href="#urgences">Urgences</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Faire remonter les difficultés de notre commune, pour mieux agir ensemble</h1>
+    <p>Un espace ouvert à tous les habitants de Popenguine et des localités voisines pour signaler un problème, donner un avis ou proposer une amélioration : santé, sécurité, éducation, eau, environnement et routes.</p>
+    <div class="actions">
+      <a class="btn" href="#signaler">Faire un signalement</a>
+      <a class="btn secondary" href="#suivi">Voir les signalements publiés</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stats" id="stats" aria-live="polite">
+    <div class="stat"><div class="n" id="s-total">0</div><div class="l">Signalements publiés</div></div>
+    <div class="stat"><div class="n" id="s-open">0</div><div class="l">En attente de traitement</div></div>
+    <div class="stat"><div class="n" id="s-progress">0</div><div class="l">En cours de traitement</div></div>
+    <div class="stat"><div class="n" id="s-done">0</div><div class="l">Résolus</div></div>
+  </div>
+</div>
+
+<section id="presentation">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Pourquoi cette plateforme ?</h2>
+    </div>
+    <div class="about">
+      <p>À Popenguine et dans les localités voisines, les difficultés du quotidien sont nombreuses : un poste de santé en manque de médicaments, une rue sans éclairage, une salle de classe en mauvais état, un point d'eau en panne, une route impraticable. Trop souvent, elles restent connues de quelques-uns et n'arrivent pas jusqu'à ceux qui peuvent agir.</p>
+      <p>L'association And Bu Yagg Popenguine (ABYP) porte cette plateforme pour que chaque habitant puisse faire entendre sa voix, simplement et gratuitement. Ensemble, nous rassemblons les besoins du territoire, nous les rendons visibles et nous en suivons le traitement avec la commune et les partenaires concernés. Cette plateforme ne remplace pas les services officiels : elle aide à les alerter au bon moment.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><h3>Vous signalez</h3><p>Décrivez la situation en quelques lignes, choisissez le domaine et la localité, ajoutez des photos pour une alerte.</p></div>
+      <div class="step"><span class="num">2</span><h3>L'équipe d'ABYP vérifie</h3><p>Chaque message est relu avant d'être publié. Les propos injurieux ou les accusations contre des personnes ne sont pas publiés.</p></div>
+      <div class="step"><span class="num">3</span><h3>Le suivi est public</h3><p>Le signalement apparaît dans le suivi public avec son état : nouveau, en cours de traitement ou résolu.</p></div>
+    </div>
+    <div class="portedby">
+      <img src="/logo-abyp.jpg" alt="Logo And Bu Yagg Popenguine (ABYP)" width="62" height="80">
+      <p><strong>Porté par And Bu Yagg Popenguine (ABYP)</strong><br>Vos coordonnées, si vous en laissez, ne sont jamais publiées et servent uniquement à vous répondre.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Domaines suivis</h2>
+      <p>Chaque signalement est classé dans l'un de ces quatre domaines.</p>
+    </div>
+    <div class="domains" id="domains"></div>
+  </div>
+</section>
+
+<section id="signaler" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Faire un signalement</h2>
+      <p>Votre message est relu par l'équipe avant d'être publié. Aucun compte n'est nécessaire.</p>
+    </div>
+    <div class="card">
+      <div id="demo-banner" class="notice info" hidden>Mode démonstration : les données restent dans ce navigateur. La base de données n'est pas encore connectée.</div>
+      <div id="form-msg" role="status" aria-live="polite"></div>
+      <form id="report-form" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label>Type de message</label>
+            <div class="segmented" role="radiogroup" aria-label="Type de message">
+              <input type="radio" name="kind" id="k-alerte" value="alerte" checked><label for="k-alerte">Alerte</label>
+              <input type="radio" name="kind" id="k-remarque" value="remarque"><label for="k-remarque">Remarque</label>
+              <input type="radio" name="kind" id="k-suggestion" value="suggestion"><label for="k-suggestion">Suggestion</label>
+            </div>
+            <span class="hint">Alerte : un problème à traiter. Remarque : une observation. Suggestion : une idée d'amélioration.</span>
+          </div>
+
+          <div class="field">
+            <label for="domain">Domaine</label>
+            <select id="domain" name="domain" required></select>
+          </div>
+          <div class="field">
+            <label for="locality">Localité</label>
+            <select id="locality" name="locality" required></select>
+          </div>
+
+          <div class="field full">
+            <label for="title">Titre</label>
+            <input id="title" name="title" maxlength="120" required placeholder="Ex. : Éclairage public en panne près de l'école">
+          </div>
+
+          <div class="field full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" maxlength="2000" required placeholder="Décrivez la situation : que se passe-t-il, depuis quand, où précisément, qui est concerné ?"></textarea>
+            <span class="hint"><span id="count">0</span> / 2000 caractères</span>
+          </div>
+
+          <div class="field full" id="photo-field">
+            <label for="photos">Photos <span class="opt">(alertes uniquement, 3 maximum)</span></label>
+            <input type="file" id="photos" accept="image/*" multiple>
+            <div class="thumbs" id="thumbs"></div>
+            <span class="hint">Les photos sont réduites automatiquement et leurs données de localisation sont supprimées. Évitez de photographier des visages ou des plaques d'immatriculation.</span>
+          </div>
+
+          <div class="field">
+            <label for="urgency">Niveau d'urgence</label>
+            <select id="urgency" name="urgency">
+              <option value="normale">Normal</option>
+              <option value="urgente">Urgent (danger pour des personnes)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="contact">Contact <span class="opt">(facultatif)</span></label>
+            <input id="contact" name="contact" maxlength="120" placeholder="Téléphone ou e-mail, jamais publié">
+            <span class="hint">Utilisé uniquement pour vous répondre si besoin.</span>
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label for="website">Ne pas remplir</label>
+            <input id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="field full">
+            <button class="btn" type="submit" id="submit-btn">Envoyer le signalement</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="suivi">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Suivi public</h2>
+      <p>Signalements validés par l'équipe, avec leur état d'avancement.</p>
+    </div>
+    <div class="filters">
+      <input type="search" id="f-q" placeholder="Rechercher un mot-clé" aria-label="Rechercher">
+      <select id="f-domain" aria-label="Filtrer par domaine"><option value="">Tous les domaines</option></select>
+      <select id="f-locality" aria-label="Filtrer par localité"><option value="">Toutes les localités</option></select>
+      <select id="f-kind" aria-label="Filtrer par type"><option value="">Tous les types</option></select>
+      <select id="f-status" aria-label="Filtrer par état"><option value="">Tous les états</option></select>
+    </div>
+    <div class="feed" id="feed" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="urgences" style="padding-top:0">
+  <div class="wrap">
+    <div class="emergency">
+      <h3>En cas d'urgence immédiate</h3>
+      <p>Cette plateforme n'est pas un service d'urgence et n'est pas consultée en temps réel. En cas de danger, appelez directement : SAMU 1515, Sapeurs-pompiers 18, Police 17, Gendarmerie 800 00 20 20.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0 0 4px">Veille citoyenne de Popenguine et environs, portée par l'association And Bu Yagg Popenguine (ABYP)</p>
+    <p style="margin:0">Réalisé par Keurnjom Multiservices · <a href="/admin">Espace administration</a></p>
+  </div>
+</footer>
+
+<script src="/config.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
