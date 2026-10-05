@@ -71,7 +71,7 @@ Optionnel : `SITE_URL` (ex. `https://veille-popenguine.vercel.app`) pour fixer l
 
 ## Modifier le site depuis l'administration
 
-Onglet **Paramètres du site** (dans `/admin`) : titre et introduction de l'accueil, section « Pourquoi cette plateforme ? », les trois étapes, la mention « Porté par », la liste des localités et le texte des numéros d'urgence. Les changements apparaissent tout de suite sur le site. Un champ vide reprend le texte d'origine, et « Rétablir les textes d'origine » remet tout à zéro. Les réglages sont stockés dans la table `site_settings` : si la base existait déjà avant cette version, exécuter de nouveau `supabase/schema.sql`.
+Onglet **Paramètres du site** (dans `/admin`) : titre et introduction de l'accueil, section « Mot du Maire » (visible seulement quand un message est saisi ; à publier après accord du Maire), section « Pourquoi cette plateforme ? », les trois étapes, la mention « Porté par », la liste des localités et le texte des numéros d'urgence. Les changements apparaissent tout de suite sur le site. Un champ vide reprend le texte d'origine, et « Rétablir les textes d'origine » remet tout à zéro. Les réglages sont stockés dans la table `site_settings` : si la base existait déjà avant cette version, exécuter de nouveau `supabase/schema.sql`.
 
 ## Avant le lancement officiel
 

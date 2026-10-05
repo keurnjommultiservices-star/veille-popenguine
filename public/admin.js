@@ -68,6 +68,10 @@
       { k: 'about1', label: 'Premier paragraphe', area: true, max: 800 },
       { k: 'about2', label: 'Deuxième paragraphe', area: true, max: 800 } ] },
     { group: 'Les trois étapes', steps: true },
+    { group: 'Mot du Maire (accueil)', items: [
+      { k: 'mayorTitle', label: 'Titre de la section', area: false, max: 80 },
+      { k: 'mayorText', label: 'Message du Maire', area: true, max: 1500, hint: 'Laissez vide pour masquer la section. Un paragraphe par ligne. À publier seulement après accord du Maire.' },
+      { k: 'mayorName', label: 'Signature', area: false, max: 160, hint: 'Ex. : Prénom NOM, Maire de la Commune de Popenguine-Ndayane' } ] },
     { group: 'Association', items: [
       { k: 'portedBy', label: 'Mention « Porté par »', area: false, max: 120 },
       { k: 'portedByNote', label: 'Note sous la mention', area: true, max: 250 } ] },
@@ -96,7 +100,7 @@
         inner = '<div class="field"><label for="set-loc">Liste des localités</label><textarea id="set-loc" rows="8">' + esc(s.localities.join('\n')) +
           '</textarea><span class="hint">Une localité par ligne. Elle apparaît dans le formulaire de signalement et dans les filtres.</span></div>';
       } else {
-        inner = g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max); }).join('');
+        inner = g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max, it.hint); }).join('');
       }
       return '<fieldset class="set-group"><legend>' + esc(g.group) + '</legend>' + inner + '</fieldset>';
     }).join('');

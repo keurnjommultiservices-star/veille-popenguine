@@ -3,7 +3,7 @@ const { config, db, readBody, isAdmin, clean } = require('./_lib');
 // Limites de longueur : le serveur ne fait jamais confiance au navigateur.
 const LIMITS = {
   heroTitle: 160, heroText: 500, aboutTitle: 100, about1: 800, about2: 800,
-  portedBy: 120, portedByNote: 250, emergency: 500,
+  portedBy: 120, portedByNote: 250, mayorTitle: 80, mayorName: 160, emergency: 500,
 };
 const MAX_LOCALITIES = 30;
 
@@ -12,6 +12,11 @@ function sanitize(input) {
   const out = {};
   for (const [k, max] of Object.entries(LIMITS)) {
     if (typeof b[k] === 'string') { const v = clean(b[k], max); if (v) out[k] = v; }
+  }
+  // Mot du Maire : on garde les retours à la ligne (un paragraphe par ligne).
+  if (typeof b.mayorText === 'string') {
+    const v = b.mayorText.split(/\r?\n/).map((l) => clean(l, 1500)).filter(Boolean).join('\n').slice(0, 1500);
+    if (v) out.mayorText = v;
   }
   if (Array.isArray(b.steps)) {
     out.steps = [0, 1, 2].map((i) => {

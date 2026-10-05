@@ -16,12 +16,15 @@
     ],
     portedBy: 'Portée par la Commune de Popenguine-Ndayane, en partenariat avec ABYP',
     portedByNote: 'Vos coordonnées, si vous en laissez, ne sont jamais publiées et servent uniquement à vous répondre.',
+    mayorTitle: 'Le mot du Maire',
+    mayorText: '',
+    mayorName: '',
     emergency: 'Cette plateforme n\'est pas un service d\'urgence et n\'est pas consultée en temps réel. En cas de danger, appelez directement : SAMU 1515, Sapeurs-pompiers 18, Police 17, Gendarmerie 800 00 20 20.',
     localities: V.localites.slice(),
   };
 
   var KEY = 'veille_popenguine_settings';
-  var TEXT_KEYS = ['heroTitle', 'heroText', 'aboutTitle', 'about1', 'about2', 'portedBy', 'portedByNote', 'emergency'];
+  var TEXT_KEYS = ['heroTitle', 'heroText', 'aboutTitle', 'about1', 'about2', 'portedBy', 'portedByNote', 'mayorTitle', 'mayorText', 'mayorName', 'emergency'];
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function filled(v) { return typeof v === 'string' && v.trim() !== ''; }
@@ -54,6 +57,22 @@
       var v = get(s, el.getAttribute('data-s'));
       if (typeof v === 'string') el.textContent = v;
     });
+    // Mot du Maire : section visible seulement si un texte est saisi ; paragraphes créés en texte brut.
+    var sec = document.getElementById('mot-du-maire');
+    if (sec) {
+      var txt = typeof s.mayorText === 'string' ? s.mayorText.trim() : '';
+      sec.hidden = !txt;
+      var box = document.getElementById('mayor-text');
+      if (box) {
+        box.textContent = '';
+        txt.split(/\n+/).forEach(function (line) {
+          if (!line.trim()) return;
+          var p = document.createElement('p'); p.textContent = line.trim(); box.appendChild(p);
+        });
+      }
+      var nm = document.getElementById('mayor-name');
+      if (nm) nm.hidden = !(typeof s.mayorName === 'string' && s.mayorName.trim());
+    }
   }
 
   function demoRead() {
