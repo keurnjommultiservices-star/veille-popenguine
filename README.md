@@ -31,6 +31,7 @@ Ne pas ouvrir `index.html` en double-cliquant : les fichiers ont besoin d'un pet
    - `SUPABASE_SERVICE_ROLE_KEY` : la clé service_role
    - `ADMIN_PASSWORD` : un mot de passe long et unique
    - `ADMIN_EMAIL` : l'adresse e-mail de l'administrateur (connexion à `/admin` par e-mail + mot de passe)
+   - Plusieurs validateurs (facultatif) : `ADMIN_USERS`, une liste JSON, par exemple `[{"email":"commune@exemple.sn","password":"mot-de-passe-1"},{"email":"abyp@exemple.sn","password":"mot-de-passe-2"}]`. Chaque validateur se connecte avec son e-mail et son mot de passe. Le couple `ADMIN_EMAIL` + `ADMIN_PASSWORD` reste valable en plus.
 5. Redéployer. Le site passe automatiquement du mode démonstration au mode réel.
 
 Administration : `https://votre-site.vercel.app/admin`

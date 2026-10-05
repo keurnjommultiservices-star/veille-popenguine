@@ -153,7 +153,12 @@
           demo = true; showPanel(); return loadAll();
         }
         if (r.status === 401) { $('login-msg').innerHTML = '<div class="notice err">E-mail ou mot de passe incorrect.</div>'; return; }
-        if (!r.ok) { $('login-msg').innerHTML = '<div class="notice err">Erreur serveur.</div>'; return; }
+        if (!r.ok) {
+          return r.json().catch(function () { return {}; }).then(function (j) {
+            var hint = j && j.code === 401 ? ' La clé Supabase est refusée : vérifiez SUPABASE_SERVICE_ROLE_KEY dans Vercel.' : (j && j.code === 404 ? ' Tables introuvables : vérifiez SUPABASE_URL.' : '');
+            $('login-msg').innerHTML = '<div class="notice err">Erreur serveur' + (j && j.code ? ' (base de données, code ' + j.code + ')' : '') + '.' + hint + '</div>';
+          });
+        }
         return r.json().then(function (j) {
           try { sessionStorage.setItem('veille_admin', pwd); sessionStorage.setItem('veille_admin_email', email); } catch (x) {}
           rows = j; showPanel(); render();

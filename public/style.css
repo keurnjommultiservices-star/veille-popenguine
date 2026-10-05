@@ -167,6 +167,7 @@ tbody tr:nth-child(even) { background: #fafafa; }
 
 .portedby { display: flex; align-items: center; gap: 16px; margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; }
 .portedby img { height: 72px; width: auto; flex: none; }
+.portedby .logos { display: flex; align-items: center; gap: 14px; flex: none; }
 .portedby p { margin: 0; color: #374151; font-size: 1rem; }
 .portedby strong { color: var(--text); }
 

@@ -1,12 +1,12 @@
-const { STATUSES, config, db, readBody, isAdmin, clean, removePhotos } = require('./_lib');
+const { STATUSES, config, db, readBody, isAdmin, adminConfigured, clean, removePhotos } = require('./_lib');
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
-  if (!config().ok || !process.env.ADMIN_PASSWORD) {
-    return res.status(503).json({ error: 'Configuration serveur incomplète (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_PASSWORD)' });
+  if (!config().ok || !adminConfigured()) {
+    return res.status(503).json({ error: 'Configuration serveur incomplète (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_PASSWORD ou ADMIN_USERS)' });
   }
   if (!isAdmin(req)) {
     await new Promise((r) => setTimeout(r, 500)); // ralentit les essais répétés
@@ -48,6 +48,6 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Méthode non autorisée' });
   } catch (e) {
     console.error('admin error', e.status, e.detail);
-    return res.status(500).json({ error: 'Erreur serveur' });
+    return res.status(500).json({ error: 'Erreur serveur', code: e.status || null });
   }
 };
