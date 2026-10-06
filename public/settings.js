@@ -52,10 +52,28 @@
     return path.split('.').reduce(function (acc, k) { return acc == null ? acc : acc[k]; }, o);
   }
 
+  // Mise en forme sûre : **gras** et {{mise en valeur}} (gras + couleur). Aucun HTML n'est interprété.
+  var RICH = /(\*\*[^*]+?\*\*|\{\{[^{}]+?\}\})/;
+  function rich(el, text) {
+    el.textContent = '';
+    String(text).split(RICH).forEach(function (part) {
+      if (!part) return;
+      var node;
+      if (part.length > 4 && part.slice(0, 2) === '**' && part.slice(-2) === '**') {
+        node = document.createElement('strong'); node.textContent = part.slice(2, -2);
+      } else if (part.length > 4 && part.slice(0, 2) === '{{' && part.slice(-2) === '}}') {
+        node = document.createElement('span'); node.className = 'em'; node.textContent = part.slice(2, -2);
+      } else {
+        node = document.createTextNode(part);
+      }
+      el.appendChild(node);
+    });
+  }
+
   function apply(s) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-s]'), function (el) {
       var v = get(s, el.getAttribute('data-s'));
-      if (typeof v === 'string') el.textContent = v;
+      if (typeof v === 'string') rich(el, v);
     });
     // Mot du Maire : section visible seulement si un texte est saisi ; paragraphes créés en texte brut.
     var sec = document.getElementById('mot-du-maire');
@@ -67,7 +85,7 @@
         box.textContent = '';
         txt.split(/\n+/).forEach(function (line) {
           if (!line.trim()) return;
-          var p = document.createElement('p'); p.textContent = line.trim(); box.appendChild(p);
+          var p = document.createElement('p'); rich(p, line.trim()); box.appendChild(p);
         });
       }
       var nm = document.getElementById('mayor-name');
@@ -92,5 +110,5 @@
       .then(merge);
   }
 
-  window.Settings = { DEFAULTS: DEFAULTS, merge: merge, apply: apply, load: load, demoRead: demoRead, demoWrite: demoWrite, demoReset: demoReset };
+  window.Settings = { rich: rich, DEFAULTS: DEFAULTS, merge: merge, apply: apply, load: load, demoRead: demoRead, demoWrite: demoWrite, demoReset: demoReset };
 })();

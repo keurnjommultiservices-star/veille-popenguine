@@ -275,3 +275,7 @@ tbody tr:nth-child(even) { background: #fafafa; }
 .mayor-text p { font-size: 1.1rem; line-height: 1.7; margin: 0 0 12px; }
 .mayor-name { margin: 16px 0 0; font-weight: 700; color: var(--accent); font-size: 1.05rem; }
 @media (max-width: 600px) { .mayor { padding: 18px 18px; } }
+
+/* Mise en valeur dans les textes (Paramètres du site) : {{texte}} */
+.em { font-weight: 700; color: #0e7490; }
+.hero .em, .admin-band .em { color: #fde68a; }
