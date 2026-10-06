@@ -37,7 +37,7 @@ a { color: var(--accent); }
 .brand-logo { height: 46px; width: auto; display: block; }
 .brand small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; line-height: 1.25; }
 .nav { display: flex; gap: 20px; flex-wrap: wrap; }
-section[id], .hero[id] { scroll-margin-top: 90px; }
+section[id], .hero[id] { scroll-margin-top: 150px; }
 .nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 1rem; padding: 4px 0; border-bottom: 2px solid transparent; }
 .nav a:hover { border-bottom-color: var(--accent); }
 
