@@ -53,7 +53,7 @@
   }
 
   // Mise en forme sûre : **gras** et {{mise en valeur}} (gras + couleur). Aucun HTML n'est interprété.
-  var RICH = /(\*\*[^*]+?\*\*|\{\{[^{}]+?\}\})/;
+  var RICH = /(\*\*[^*]+?\*\*|\{\{[^{}]+?\}\}|\+\+[^+]+?\+\+)/;
   function rich(el, text) {
     el.textContent = '';
     String(text).split(RICH).forEach(function (part) {
@@ -63,6 +63,8 @@
         node = document.createElement('strong'); node.textContent = part.slice(2, -2);
       } else if (part.length > 4 && part.slice(0, 2) === '{{' && part.slice(-2) === '}}') {
         node = document.createElement('span'); node.className = 'em'; node.textContent = part.slice(2, -2);
+      } else if (part.length > 4 && part.slice(0, 2) === '++' && part.slice(-2) === '++') {
+        node = document.createElement('span'); node.className = 'big'; node.textContent = part.slice(2, -2);
       } else {
         node = document.createTextNode(part);
       }

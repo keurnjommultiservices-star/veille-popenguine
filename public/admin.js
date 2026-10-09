@@ -84,8 +84,26 @@
     var ctl = area
       ? '<textarea id="' + id + '" maxlength="' + max + '" rows="' + (max >= 700 ? 7 : 3) + '">' + esc(value) + '</textarea>'
       : '<input id="' + id + '" maxlength="' + max + '" value="' + esc(value) + '">';
-    return '<div class="field"><label for="' + id + '">' + esc(label) + '</label>' + ctl + (hint ? '<span class="hint">' + esc(hint) + '</span>' : '') + '</div>';
+    var bar = '<div class="fmt-bar" role="toolbar" aria-label="Mise en forme">' +
+      '<button type="button" data-fmt="**" data-for="' + id + '" title="Mettre en gras"><strong>Gras</strong></button>' +
+      '<button type="button" data-fmt="{{" data-for="' + id + '" title="Gras et couleur"><span style="color:#0e7490;font-weight:700">Couleur</span></button>' +
+      '<button type="button" data-fmt="++" data-for="' + id + '" title="Agrandir les caractères"><span style="font-size:17px">Grand</span></button></div>';
+    return '<div class="field"><label for="' + id + '">' + esc(label) + '</label>' + bar + ctl + (hint ? '<span class="hint">' + esc(hint) + '</span>' : '') + '</div>';
   }
+
+  // Boutons de mise en forme : entourent le texte sélectionné des repères (**, {{ }}, ++).
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-fmt]');
+    if (!b) return;
+    var el = document.getElementById(b.getAttribute('data-for'));
+    if (!el) return;
+    var open = b.getAttribute('data-fmt'), close = open === '{{' ? '}}' : open;
+    var a = el.selectionStart || 0, z = el.selectionEnd || 0;
+    var sel = el.value.slice(a, z) || 'texte';
+    el.value = el.value.slice(0, a) + open + sel + close + el.value.slice(z);
+    el.focus();
+    el.setSelectionRange(a + open.length, a + open.length + sel.length);
+  });
 
   function renderSettings(custom) {
     var s = window.Settings.merge(custom);

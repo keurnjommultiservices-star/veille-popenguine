@@ -279,3 +279,7 @@ tbody tr:nth-child(even) { background: #fafafa; }
 /* Mise en valeur dans les textes (Paramètres du site) : {{texte}} */
 .em { font-weight: 700; color: #0e7490; }
 .hero .em, .admin-band .em { color: #fde68a; }
+.big { font-size: 1.3em; line-height: 1.3; }
+.fmt-bar { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.fmt-bar button { font: inherit; font-size: 14px; padding: 4px 12px; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; cursor: pointer; color: #1e3a8a; }
+.fmt-bar button:hover { background: #eff6ff; }
