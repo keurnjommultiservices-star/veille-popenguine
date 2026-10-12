@@ -21,6 +21,16 @@
     mayorName: '',
     emergency: 'Cette plateforme n\'est pas un service d\'urgence et n\'est pas consultée en temps réel. En cas de danger, appelez directement : SAMU 1515, Sapeurs-pompiers 18, Police 17, Gendarmerie 800 00 20 20.',
     localities: V.localites.slice(),
+    showAbyp: true,
+    footerText: 'Veille citoyenne de Popenguine et environs, portée par la Commune de Popenguine-Ndayane, en partenariat avec l\'association And Bu Yagg Popenguine (ABYP)',
+  };
+
+  // Versions sans ABYP, utilisées quand le partenaire est retiré (case « Afficher ABYP » décochée dans l'admin).
+  var NO_ABYP = {
+    about2: 'La Commune de Popenguine-Ndayane porte cette plateforme pour que chaque habitant puisse faire entendre sa voix, simplement et gratuitement. Ensemble, nous rassemblons les besoins du territoire, nous les rendons visibles et nous en suivons le traitement avec les services et les partenaires concernés. Cette plateforme ne remplace pas les services officiels : elle aide à les alerter au bon moment.',
+    portedBy: 'Portée par la Commune de Popenguine-Ndayane',
+    footerText: 'Veille citoyenne de Popenguine et environs, portée par la Commune de Popenguine-Ndayane',
+    step1: { title: 'La commune vérifie', text: 'Chaque message est relu par l\'équipe de la commune avant d\'être publié. Les propos injurieux ou les accusations contre des personnes ne sont pas publiés.' },
   };
 
   var KEY = 'veille_popenguine_settings';
@@ -44,6 +54,15 @@
     if (Array.isArray(custom.localities)) {
       var l = custom.localities.filter(filled).map(function (x) { return x.trim(); });
       if (l.length) s.localities = l;
+    }
+    // ABYP retiré : on remplace les textes d'origine qui le citent (un texte réécrit à la main n'est jamais touché).
+    if (custom.showAbyp === false) {
+      s.showAbyp = false;
+      s.footerText = NO_ABYP.footerText;
+      if (s.about2 === DEFAULTS.about2) s.about2 = NO_ABYP.about2;
+      if (s.portedBy === DEFAULTS.portedBy) s.portedBy = NO_ABYP.portedBy;
+      if (s.steps[1].title === DEFAULTS.steps[1].title) s.steps[1].title = NO_ABYP.step1.title;
+      if (s.steps[1].text === DEFAULTS.steps[1].text) s.steps[1].text = NO_ABYP.step1.text;
     }
     return s;
   }
@@ -77,6 +96,9 @@
       var v = get(s, el.getAttribute('data-s'));
       if (typeof v === 'string') rich(el, v);
     });
+    // Logo d'ABYP : masqué si le partenaire est retiré.
+    var lg = document.getElementById('logo-abyp');
+    if (lg) lg.style.display = s.showAbyp === false ? 'none' : '';
     // Mot du Maire : section visible seulement si un texte est saisi ; paragraphes créés en texte brut.
     var sec = document.getElementById('mot-du-maire');
     if (sec) {

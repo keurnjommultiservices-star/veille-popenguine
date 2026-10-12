@@ -72,7 +72,7 @@
       { k: 'mayorTitle', label: 'Titre de la section', area: false, max: 80 },
       { k: 'mayorText', label: 'Message du Maire', area: true, max: 1500, hint: 'Laissez vide pour masquer la section. Un paragraphe par ligne. À publier seulement après accord du Maire.' },
       { k: 'mayorName', label: 'Signature', area: false, max: 160, hint: 'Ex. : Prénom NOM, Maire de la Commune de Popenguine-Ndayane' } ] },
-    { group: 'Association', items: [
+    { group: 'Association', partner: true, items: [
       { k: 'portedBy', label: 'Mention « Porté par »', area: false, max: 120 },
       { k: 'portedByNote', label: 'Note sous la mention', area: true, max: 250 } ] },
     { group: 'Localités', localities: true },
@@ -118,14 +118,18 @@
         inner = '<div class="field"><label for="set-loc">Liste des localités</label><textarea id="set-loc" rows="8">' + esc(s.localities.join('\n')) +
           '</textarea><span class="hint">Une localité par ligne. Elle apparaît dans le formulaire de signalement et dans les filtres.</span></div>';
       } else {
-        inner = g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max, it.hint); }).join('');
+        inner = (g.partner
+          ? '<div class="field"><label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" id="set-showAbyp"' + (s.showAbyp === false ? '' : ' checked') + ' style="width:auto"> Afficher l\'association ABYP (logo, mentions, pied de page)</label>' +
+            '<span class="hint">Décochez puis cliquez sur « Enregistrer » pour retirer ABYP du site. Les textes d\'origine qui la citent sont remplacés ; un texte que vous avez réécrit vous-même n\'est pas modifié. Pensez aussi à retirer son compte validateur (variable ADMIN_USERS sur Vercel).</span></div>'
+          : '') +
+          g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max, it.hint); }).join('');
       }
       return '<fieldset class="set-group"><legend>' + esc(g.group) + '</legend>' + inner + '</fieldset>';
     }).join('');
   }
 
   function collectSettings() {
-    var out = { steps: [], localities: [] };
+    var out = { steps: [], localities: [], showAbyp: $('set-showAbyp') ? $('set-showAbyp').checked : true };
     FIELDS.forEach(function (g) {
       if (g.items) g.items.forEach(function (it) { out[it.k] = $('set-' + it.k).value; });
     });
