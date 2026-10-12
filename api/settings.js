@@ -18,6 +18,7 @@ function sanitize(input) {
     const v = b.mayorText.split(/\r?\n/).map((l) => clean(l, 1500)).filter(Boolean).join('\n').slice(0, 1500);
     if (v) out.mayorText = v;
   }
+  if (typeof b.showAbyp === 'boolean') out.showAbyp = b.showAbyp;
   if (Array.isArray(b.steps)) {
     out.steps = [0, 1, 2].map((i) => {
       const s = b.steps[i] && typeof b.steps[i] === 'object' ? b.steps[i] : {};
