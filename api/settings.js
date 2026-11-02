@@ -77,7 +77,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET, PUT, DELETE');
     return res.status(405).json({ error: 'Méthode non autorisée' });
   } catch (e) {
-    console.error('settings error', e.status, e.detail);
+    console.error('settings error', e.status, e.detail, e.message, e.cause && (e.cause.code || e.cause.message));
     if (e.status === 404) {
       return res.status(500).json({ error: "La table des paramètres n'existe pas : exécutez de nouveau supabase/schema.sql dans Supabase." });
     }

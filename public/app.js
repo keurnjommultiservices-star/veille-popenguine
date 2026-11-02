@@ -226,3 +226,14 @@
     init();
   });
 })();
+
+/* Hauteur réelle de l'en-tête (elle change si le menu passe sur 2 lignes) : les liens du menu s'arrêtent juste dessous. */
+(function () {
+  function setHdr() {
+    var h = document.querySelector('.topbar');
+    if (h) document.documentElement.style.setProperty('--hdr', h.offsetHeight + 'px');
+  }
+  setHdr();
+  window.addEventListener('resize', setHdr);
+  window.addEventListener('load', setHdr);
+})();

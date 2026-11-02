@@ -79,7 +79,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Méthode non autorisée' });
   } catch (e) {
-    console.error('reports error', e.status, e.detail);
+    console.error('reports error', e.status, e.detail, e.message, e.cause && (e.cause.code || e.cause.message));
     return res.status(500).json({ error: 'Erreur serveur' });
   }
 };
