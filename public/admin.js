@@ -68,11 +68,11 @@
       { k: 'about1', label: 'Premier paragraphe', area: true, max: 800 },
       { k: 'about2', label: 'Deuxième paragraphe', area: true, max: 800 } ] },
     { group: 'Les trois étapes', steps: true },
-    { group: 'Mot du Maire (accueil)', items: [
+    { group: 'Mot du Maire / du porteur (accueil)', items: [
       { k: 'mayorTitle', label: 'Titre de la section', area: false, max: 80 },
-      { k: 'mayorText', label: 'Message du Maire', area: true, max: 1500, hint: 'Laissez vide pour masquer la section. Un paragraphe par ligne. À publier seulement après accord du Maire.' },
-      { k: 'mayorName', label: 'Signature', area: false, max: 160, hint: 'Ex. : Prénom NOM, Maire de la Commune de Popenguine-Ndayane' } ] },
-    { group: 'Association', partner: true, items: [
+      { k: 'mayorText', label: 'Message du Maire ou du responsable', area: true, max: 1500, hint: 'Laissez vide pour masquer la section. Un paragraphe par ligne. À publier seulement après accord de la personne concernée.' },
+      { k: 'mayorName', label: 'Signature', area: false, max: 160, hint: 'Ex. : Prénom NOM, Maire de la Commune de Popenguine-Ndayane ou président d\'ABYP' } ] },
+    { group: 'Porteur de la plateforme', partner: true, items: [
       { k: 'portedBy', label: 'Mention « Porté par »', area: false, max: 120 },
       { k: 'portedByNote', label: 'Note sous la mention', area: true, max: 250 } ] },
     { group: 'Localités', localities: true },
@@ -119,8 +119,10 @@
           '</textarea><span class="hint">Une localité par ligne. Elle apparaît dans le formulaire de signalement et dans les filtres.</span></div>';
       } else {
         inner = (g.partner
-          ? '<div class="field"><label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" id="set-showAbyp"' + (s.showAbyp === false ? '' : ' checked') + ' style="width:auto"> Afficher l\'association ABYP (logo, mentions, pied de page)</label>' +
-            '<span class="hint">Décochez puis cliquez sur « Enregistrer » pour retirer ABYP du site. Les textes d\'origine qui la citent sont remplacés ; un texte que vous avez réécrit vous-même n\'est pas modifié. Pensez aussi à retirer son compte validateur (variable ADMIN_USERS sur Vercel).</span></div>'
+          ? '<div class="field"><label for="set-carrier">Qui porte la plateforme ?</label><select id="set-carrier">' +
+            [['commune', 'La Commune (Mairie) seule'], ['abyp', 'L\'association ABYP seule'], ['both', 'La Commune en partenariat avec ABYP']].map(function (o) {
+              return '<option value="' + o[0] + '"' + ((s.carrier || 'commune') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+            '</select><span class="hint">Change les logos et les textes d\'origine qui citent la Commune ou ABYP (présentation, étape de vérification, pied de page). Un texte que vous avez réécrit vous-même n\'est pas modifié. Après un changement, cliquez sur « Enregistrer » et ajustez au besoin les comptes validateurs (variable ADMIN_USERS sur Vercel).</span></div>'
           : '') +
           g.items.map(function (it) { return field('set-' + it.k, it.label, s[it.k], it.area, it.max, it.hint); }).join('');
       }
@@ -129,7 +131,7 @@
   }
 
   function collectSettings() {
-    var out = { steps: [], localities: [], showAbyp: $('set-showAbyp') ? $('set-showAbyp').checked : true };
+    var out = { steps: [], localities: [], carrier: $('set-carrier') ? $('set-carrier').value : 'commune' };
     FIELDS.forEach(function (g) {
       if (g.items) g.items.forEach(function (it) { out[it.k] = $('set-' + it.k).value; });
     });
